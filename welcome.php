@@ -30,7 +30,7 @@
             session_start();
 
             if(isset($_SESSION['username'])) {
-                echo 'Welcome '.$_SESSION['username'].'<br>';
+                echo 'Čus '.$_SESSION['username'].'<br>';
                 echo 'Click here to <a href="logout.php" title="Logout">logout.</a>';
             } else {
                 echo 'Session not set.';
