@@ -13,29 +13,35 @@
             margin: 0;
         }
 
-        .welcome-box {
-            text-align: center;
-            padding: 100px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            background-color: #fff;
-            font-size: 3vw
-        }
 
     </style>
 </head>
 <body>
-    <div class="welcome-box">
-        <?php
-            session_start();
+<?php
 
-            if(isset($_SESSION['username'])) {
-                echo 'Čus '.$_SESSION['username'].'<br>';
-                echo 'Click here to <a href="logout.php" title="Logout">logout.</a>';
-            } else {
-                echo 'Session not set.';
-            }
-        ?>
-    </div>
+$servername = "localhost";
+$username = "csokas3a";
+$password = "csokas3a";
+$dbname = "csokas3a";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+
+if ($connection->connect_error) {
+    die("Chyba pripojenie k db: " . $connection->connect_error);
+}
+
+$sql = "SELECT id, nazov FROM t_produkt";
+
+$vysledok = $connection->query($sql);
+
+$pocet = $vysledok->num_rows;
+
+if ($pocet>0){
+    while($riadok = $vysledok->fetch_assoc() ){
+        echo "Produkt ".$riadok["id"]." je: " .$riadok["nazov"]." <br />";
+    }
+}
+?> 
 </body>
 </html>
