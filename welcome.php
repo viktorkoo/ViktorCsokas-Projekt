@@ -50,6 +50,7 @@ $pocet = $vysledok->num_rows;
             justify-content: center;
             height: 100vh;
             margin: 0;
+            background-color: 54, 53, 50;
         }
 
 

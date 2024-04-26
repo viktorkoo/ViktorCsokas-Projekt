@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2024 at 11:49 AM
+-- Generation Time: Apr 26, 2024 at 11:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,41 @@ SET time_zone = "+00:00";
 --
 -- Database: `csokas3a`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auto`
+--
+
+CREATE TABLE `auto` (
+  `id` int(11) NOT NULL,
+  `model_auta` varchar(150) NOT NULL,
+  `rok_vyroby` int(11) NOT NULL,
+  `cena` float NOT NULL,
+  `vyrobca` varchar(100) NOT NULL,
+  `typ_auta` varchar(100) NOT NULL,
+  `najazdene_km` float NOT NULL,
+  `fotka` varchar(300) NOT NULL,
+  `fotka2` varchar(150) NOT NULL,
+  `fotka3` varchar(150) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `auto`
+--
+
+INSERT INTO `auto` (`id`, `model_auta`, `rok_vyroby`, `cena`, `vyrobca`, `typ_auta`, `najazdene_km`, `fotka`, `fotka2`, `fotka3`) VALUES
+(1, '911 GT3RS', 2021, 250000, 'Porsche', 'Šport', 2700, 'img/porsche911gt3rs.jpeg', 'img/c63s.jpg', 'img/camry.jpg'),
+(3, 'C 63 S AMG', 2017, 89900, 'Mercedes', 'Coupé', 25000, 'img/c63s.jpg', '', ''),
+(4, 'Camry', 2015, 25000, 'Toyota', 'Sedan', 140000, 'img/camry.jpg', '', ''),
+(5, 'Meriva', 2014, 6500, 'Opel', 'Mini MPV', 105000, 'img/meriva.jpg', '', ''),
+(6, 'Fiat Multipla', 2002, 1520, 'Fiat', 'mini MPV', 400000, 'img/multipla.jpg', '', ''),
+(7, 'BMW M5 Competition', 2021, 91500, 'BMW', 'sedan', 1200, 'img/m5.jpg', '', ''),
+(8, 'Hyundai i20 n', 2021, 31500, 'Hyundai', 'Hatchback', 12400, 'img/i20n.jpg', '', ''),
+(9, 'Lamborghini Aventador LP700-4', 2015, 397050, 'Lamborghini', 'Supercar', 5079, 'img/lambo.jpg', '', ''),
+(10, 'Ferrari F40', 1988, 2400600, 'Ferrari', 'Supercar', 743, 'img/f40.jpg', '', ''),
+(11, 'Audi RS6 avant', 2022, 112500, 'Audi', 'Wagon', 23006, 'img/rs6.jpg', '', '');
 
 -- --------------------------------------------------------
 
@@ -80,6 +115,12 @@ INSERT INTO `t_user` (`id`, `username`, `password`, `email`) VALUES
 --
 
 --
+-- Indexes for table `auto`
+--
+ALTER TABLE `auto`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `t_produkt`
 --
 ALTER TABLE `t_produkt`
@@ -94,6 +135,12 @@ ALTER TABLE `t_user`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `auto`
+--
+ALTER TABLE `auto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `t_produkt`
