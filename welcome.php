@@ -10,26 +10,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
             margin: 0;
         }
         .sort-buttons {
             margin-bottom: 20px;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
 <div class="sort-buttons">
-        <form method="get" action="">
-            <button type="submit" name="sort" value="najazdene_km">Triedit podla km</button>
-        </form>
-        <form method="get" action="">
-            <button type="submit" name="sort" value="id">Triedit podla ID</button>
-        </form>
-        <form method="get" action="">
-            <button type="submit" name="sort" value="model_auta">Triedit podla nazvu</button>
-        </form>
-    </div>
+    <form method="get" action="">
+        <button type="submit" name="sort" value="najazdene_km">Triedit podla km</button>
+        <button type="submit" name="sort" value="id">Triedit podla ID</button>
+        <button type="submit" name="sort" value="model_auta">Triedit podla nazvu</button>
+    </form>
+</div>
 <section class="car-listing">
     <?php
     $servername = "localhost";
@@ -43,8 +40,9 @@
         die("Connection failed: " . $connection->connect_error);
     }
 
-    $sort_by = isset($_GET['sort']) ? $_GET['sort'] : 'id'; // defaultne zoradenie podľa ID
-    $sql = "SELECT * FROM auto ORDER BY $sort_by"; // zmena SELECT s orderBy
+    $valid_sort_columns = ['najazdene_km', 'id', 'model_auta'];
+    $sort_by = isset($_GET['sort']) && in_array($_GET['sort'], $valid_sort_columns) ? $_GET['sort'] : 'id';
+    $sql = "SELECT auto.*, kategoria.typ_auta FROM auto INNER JOIN kategoria ON auto.typ_auta=kategoria.id ORDER BY $sort_by";
 
     $result = $connection->query($sql);
 
@@ -58,10 +56,6 @@
             echo '<p>Najazdené km: '.$row["najazdene_km"].' km</p>';
             echo '<p>Rok výroby: '.$row["rok_vyroby"].'</p>';
             echo '<p>'.$row["typ_auta"].'</p>';
-            echo '<form method="post" action="">';
-            echo '<input type="hidden" name="car_id" value="'.$row["id"].'">';
-            echo '<input type="hidden" name="user_id" value="1">';
-            echo '</form>';
             echo '</div>';
         }
     } else {

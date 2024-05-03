@@ -18,7 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "";
 
     $input_username = $_POST['username'];
-    $input_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $input_password = $_POST['password'];
+    $input_confirm_password = $_POST['confirm_password'];
     $input_email = $_POST['email'];
 
     $check_username_sql = "SELECT * FROM t_user WHERE username='$input_username'";
@@ -34,6 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "E-mail already in use";
       }
       else{
+        if ($input_password !== $input_confirm_password) {
+          $error = "Passwords do not match";
+      } else {
+        $input_password = password_hash($input_password, PASSWORD_DEFAULT);
         $insert_sql = "INSERT INTO t_user (username, password, email) VALUES ('$input_username', '$input_password', '$input_email')";
 
         if ($conn->query($insert_sql) === TRUE) {
@@ -43,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
       }
     }
+  }
 
     $conn->close();
 }
@@ -87,7 +93,8 @@ echo '<html>';
    echo '<form action="register.php" method="post">';
    echo '<input type="text" name="username" placeholder="username" required autofocus></br>';
    echo '<input type="email" name="email" placeholder="email" required autofocus></br>';
-   echo '<input type="password" name="password" placeholder="password" required>';
+   echo '<input type="password" name="password" placeholder="password" required></br>';
+   echo '<input type="password" name="confirm_password" placeholder="Confirm Password" required></br>';
    echo '<input type="submit" name="login">';
    echo '<p>'.$error.'</p>';
    echo '<a href="index.php">Login</a>';
