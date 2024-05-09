@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2024 at 11:05 AM
+-- Generation Time: May 09, 2024 at 10:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -80,33 +80,6 @@ INSERT INTO `kategoria` (`id`, `typ_auta`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `t_produkt`
---
-
-CREATE TABLE `t_produkt` (
-  `id` int(11) NOT NULL,
-  `nazov` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `t_produkt`
---
-
-INSERT INTO `t_produkt` (`id`, `nazov`) VALUES
-(1, 'vyfuk'),
-(2, 'auto'),
-(3, 'koleso'),
-(4, 'motor'),
-(5, 'sedadlo'),
-(6, 'servo'),
-(7, 'ABS modul'),
-(8, 'jablko'),
-(9, 'hruska'),
-(10, 'melon');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `t_user`
 --
 
@@ -150,12 +123,6 @@ ALTER TABLE `kategoria`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `t_produkt`
---
-ALTER TABLE `t_produkt`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `t_user`
 --
 ALTER TABLE `t_user`
@@ -176,12 +143,6 @@ ALTER TABLE `auto`
 --
 ALTER TABLE `kategoria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `t_produkt`
---
-ALTER TABLE `t_produkt`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `t_user`

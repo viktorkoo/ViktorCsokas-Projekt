@@ -11,11 +11,35 @@
             align-items: center;
             justify-content: center;
             margin: 0;
+            flex-direction: column;
         }
+
+        img {
+            height: 200px;
+            aspect-ratio: 16/10;
+        }
+
         .sort-buttons {
             margin-bottom: 20px;
-            align-items: center;
+            margin-top: 20px;
+            display: flex;
             justify-content: center;
+        }
+
+        .sort-buttons button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #3b3d40;
+            color: #ffff; 
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .sort-buttons button:hover {
+            background-color: #606469;
         }
     </style>
 </head>
