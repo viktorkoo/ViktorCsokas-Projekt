@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>Autickaaa</title>
     <style>
         body {
             display: flex;
@@ -22,6 +22,12 @@
         .sort-buttons {
             margin-bottom: 20px;
             margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .stats p{
+            margin-left: 2vw;
+            margin-right: 2vw;
             display: flex;
             justify-content: center;
         }
@@ -43,6 +49,7 @@
         }
     </style>
 </head>
+
 <body>
 <div class="sort-buttons">
     <form method="get" action="">
@@ -64,9 +71,7 @@
         die("Connection failed: " . $connection->connect_error);
     }
 
-    $valid_sort_columns = ['najazdene_km', 'id', 'model_auta'];
-    $sort_by = isset($_GET['sort']) && in_array($_GET['sort'], $valid_sort_columns) ? $_GET['sort'] : 'id';
-    $sql = "SELECT auto.*, kategoria.typ_auta FROM auto INNER JOIN kategoria ON auto.typ_auta=kategoria.id ORDER BY $sort_by";
+    $sql = "SELECT auto.*, kategoria.typ_auta FROM auto INNER JOIN kategoria ON auto.typ_auta=kategoria.id";
 
     $result = $connection->query($sql);
 
@@ -82,11 +87,46 @@
             echo '<p>'.$row["typ_auta"].'</p>';
             echo '</div>';
         }
-    } else {
+    } 
+    else {
         echo "No results found";
     }
+
+    // Additional query within the same PHP block
+    $sql_aggregate = "SELECT COUNT(*) AS count_products,
+    MIN(cena) AS min_price,
+    MAX(cena) AS max_price,
+    AVG(rok_vyroby) AS avg_year,
+    SUM(najazdene_km) AS sum_km
+    FROM auto";
+
+    $result_aggregate = $connection->query($sql_aggregate);
+
+    if ($result_aggregate->num_rows > 0) {
+        while ($row = $result_aggregate->fetch_assoc()) {
+            // Store the values for later use
+            $count_products = $row['count_products'];
+            $min_price = $row['min_price'];
+            $max_price = $row['max_price'];
+            $avg_year = $row['avg_year'];
+            $sum_km = $row['sum_km'];
+        } 
+    } 
+    else {
+        echo "No results found";
+    }
+
     $connection->close();
     ?>
 </section>
+        <div class="stats">
+            <?php
+                echo "<p>Počet produktov: $count_products</p>";
+                echo "<p>Minimálna cena: $min_price €</p>";
+                echo "<p>Maximálna cena: $max_price €</p>";
+                echo "<p>Priemerný rok vydania: $avg_year</p>";
+                echo "<p>Spočétané kilometre áut: $sum_km km</p>";
+            ?>
+        </div>
 </body>
 </html>

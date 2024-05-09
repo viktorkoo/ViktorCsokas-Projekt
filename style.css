@@ -3,16 +3,19 @@ body {
   margin: 0;
   padding: 0;
 }
-.cart{
-    padding-right:10vw;
-}
+
 header {
   background-color: #333;
   color: #fff;
-  padding: 10px;
+  width: 100%;
+  height: 100px; /* Adjust height as needed */
+  position: absolute;
+  top: 0;
+  left: 0;
 }
-header .home{
-  font-size:3vw;
+
+header .home {
+  font-size: 3vw;
 }
 
 header a {
@@ -20,10 +23,11 @@ header a {
   text-decoration: none;
   padding: 5px 10px;
 }
+
 header .cart {
-    float: right;
-    height: 3vw;
-    width: 3vw;
+  float: right;
+  height: 3vw;
+  width: 3vw;
 }
 
 header a:hover {
@@ -72,9 +76,7 @@ footer {
   background-color: #333;
   color: #fff;
   text-align: center;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
+  padding: 0;
   width: 100%;
 }
 
@@ -98,7 +100,7 @@ footer {
   right: 0;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -109,6 +111,14 @@ footer {
   display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1;}
-.dropdown:hover .dropdown-content {display: block;}
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
