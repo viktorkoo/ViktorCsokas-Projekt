@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,11 +21,11 @@
 
         .sort-buttons {
             margin-bottom: 20px;
-            margin-top: 20px;
+            margin-top: 70px;
             display: flex;
             justify-content: center;
         }
-        .stats p{
+        .stats p {
             margin-left: 2vw;
             margin-right: 2vw;
             display: flex;
@@ -36,7 +36,7 @@
             padding: 10px 20px;
             margin: 0 5px;
             background-color: #3b3d40;
-            color: #ffff; 
+            color: #ffff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -51,27 +51,57 @@
 </head>
 
 <body>
+<header>
+    <?php include 'navbar.php';?>
+</header>
 <div class="sort-buttons">
     <form method="get" action="">
+        <input type="hidden" name="order" value="<?php echo ($_GET['order'] ?? 'ASC') === 'ASC' ? 'DESC' : 'ASC'; ?>">
         <button type="submit" name="sort" value="najazdene_km">Triedit podla km</button>
         <button type="submit" name="sort" value="id">Triedit podla ID</button>
         <button type="submit" name="sort" value="model_auta">Triedit podla nazvu</button>
+        <select name="category" onchange="this.form.submit()">
+            <option value="">Všetky kategórie</option>
+            <?php
+            $servername = "localhost";
+            $username = "csokas3a";
+            $password = "csokas3a";
+            $dbname = "csokas3a";
+
+            $connection = new mysqli($servername, $username, $password, $dbname);
+
+            if ($connection->connect_error) {
+                die("Connection failed: " . $connection->connect_error);
+            }
+
+            $sql_categories = "SELECT id, typ_auta FROM kategoria";
+            $result_categories = $connection->query($sql_categories);
+
+            if ($result_categories->num_rows > 0) {
+                while ($row = $result_categories->fetch_assoc()) {
+                    $selected = ($_GET['category'] ?? '') == $row['id'] ? 'selected' : '';
+                    echo '<option value="'.$row['id'].'" '.$selected.'>'.$row['typ_auta'].'</option>';
+                }
+            }
+            ?>
+        </select>
     </form>
 </div>
+
 <section class="car-listing">
     <?php
-    $servername = "localhost";
-    $username = "csokas3a";
-    $password = "csokas3a";
-    $dbname = "csokas3a";
+    $sql = "SELECT auto.*, kategoria.typ_auta FROM auto INNER JOIN kategoria ON auto.typ_auta = kategoria.id";
 
-    $connection = new mysqli($servername, $username, $password, $dbname);
-
-    if ($connection->connect_error) {
-        die("Connection failed: " . $connection->connect_error);
+    if (isset($_GET['category']) && $_GET['category'] != '') {
+        $category = $_GET['category'];
+        $sql .= " WHERE auto.typ_auta = $category";
     }
 
-    $sql = "SELECT auto.*, kategoria.typ_auta FROM auto INNER JOIN kategoria ON auto.typ_auta=kategoria.id";
+    if (isset($_GET['sort'])) {
+        $sort = $_GET['sort'];
+        $order = $_GET['order'] ?? 'ASC';
+        $sql .= " ORDER BY $sort $order";
+    }
 
     $result = $connection->query($sql);
 
@@ -119,14 +149,14 @@
     $connection->close();
     ?>
 </section>
-        <div class="stats">
-            <?php
-                echo "<p>Počet produktov: $count_products</p>";
-                echo "<p>Minimálna cena: $min_price €</p>";
-                echo "<p>Maximálna cena: $max_price €</p>";
-                echo "<p>Priemerný rok vydania: $avg_year</p>";
-                echo "<p>Spočétané kilometre áut: $sum_km km</p>";
-            ?>
-        </div>
+<div class="stats">
+    <?php
+        echo "<p>Počet produktov: $count_products</p>";
+        echo "<p>Minimálna cena: $min_price €</p>";
+        echo "<p>Maximálna cena: $max_price €</p>";
+        echo "<p>Priemerný rok vydania: $avg_year</p>";
+        echo "<p>Spočítané kilometre áut: $sum_km km</p>";
+    ?>
+</div>
 </body>
 </html>
