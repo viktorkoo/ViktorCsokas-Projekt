@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 09, 2024 at 10:03 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: endora-db-11.stable.cz:3306
+-- Generation Time: May 28, 2024 at 06:58 AM
+-- Server version: 10.3.35-MariaDB
+-- PHP Version: 7.3.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -36,7 +37,7 @@ CREATE TABLE `auto` (
   `typ_auta` int(11) NOT NULL,
   `najazdene_km` float NOT NULL,
   `fotka` varchar(300) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `auto`
@@ -63,7 +64,7 @@ INSERT INTO `auto` (`id`, `model_auta`, `rok_vyroby`, `cena`, `vyrobca`, `typ_au
 CREATE TABLE `kategoria` (
   `id` int(11) NOT NULL,
   `typ_auta` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `kategoria`
@@ -80,6 +81,25 @@ INSERT INTO `kategoria` (`id`, `typ_auta`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `kosik`
+--
+
+CREATE TABLE `kosik` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_auto` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `kosik`
+--
+
+INSERT INTO `kosik` (`id`, `id_user`, `id_auto`) VALUES
+(32, 13, 4);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `t_user`
 --
 
@@ -87,24 +107,27 @@ CREATE TABLE `t_user` (
   `id` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `email` varchar(100) NOT NULL,
+  `adresa` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `t_user`
 --
 
-INSERT INTO `t_user` (`id`, `username`, `password`, `email`) VALUES
-(1, 'jozko', '123', 'jozko@gmail.com'),
-(3, 'anicka', '$2y$10$pijSaeImh7FRrMR2ntRQU.gsRegfWAJSLpPfYiSZj3IY9sNe83U9S', 'anicka@a.sk'),
-(4, 'evka', '$2y$10$QSjtodjxA03YHzHE.tK2W.27Wr6Q9so52xnsPXdp92H3x.Kxs2FVe', ''),
-(5, 'csokas3a', '$2y$10$khODuymgh36dbgiaNgHHFO3DbCebn5CFiaW5nI7DRgtydrvOQEPq.', ''),
-(6, 'milka', '$2y$10$ymXSrGC/urWmBePjhfgzMO6d./xoawGmn4i1C3FB0pA4TXvBbhkaC', ''),
-(7, 'jozik', '$2y$10$TwRqipcjvhyQxqzmNYlvOOtzwePw9MY6tfr5PJMUbRcWsAp6LHf9C', ''),
-(8, 'csokas', '$2y$10$FNx38CIYG/cmNKJbXqlslO/VPbWApIjUE8BI0prxiDqO8N7j1u/Le', ''),
-(9, 'asd12', '$2y$10$HketPKgtr9GKG/vo1YbzRO088RllNj9TZkOCVENW1XbjnveAugzwm', 'asd12@gmail.com'),
-(10, 'asdasd', 'asd123', 'asdasd@gmail.com'),
-(11, 'asder', '$2y$10$l8GJb64dImuyEv12rKfm3OO/37Y6OWKL/InY78w5eWOFkBo2IqY/i', 'asder@gmail.com');
+INSERT INTO `t_user` (`id`, `username`, `password`, `email`, `adresa`) VALUES
+(1, 'jozko', '123', 'jozko@gmail.com', ''),
+(3, 'anicka', '$2y$10$pijSaeImh7FRrMR2ntRQU.gsRegfWAJSLpPfYiSZj3IY9sNe83U9S', 'anicka@a.sk', ''),
+(4, 'evka', '$2y$10$QSjtodjxA03YHzHE.tK2W.27Wr6Q9so52xnsPXdp92H3x.Kxs2FVe', '', ''),
+(5, 'csokas3a', '$2y$10$khODuymgh36dbgiaNgHHFO3DbCebn5CFiaW5nI7DRgtydrvOQEPq.', '', ''),
+(6, 'milka', '$2y$10$ymXSrGC/urWmBePjhfgzMO6d./xoawGmn4i1C3FB0pA4TXvBbhkaC', '', ''),
+(7, 'jozik', '$2y$10$TwRqipcjvhyQxqzmNYlvOOtzwePw9MY6tfr5PJMUbRcWsAp6LHf9C', '', ''),
+(8, 'csokas', '$2y$10$FNx38CIYG/cmNKJbXqlslO/VPbWApIjUE8BI0prxiDqO8N7j1u/Le', '', ''),
+(9, 'asd12', '$2y$10$HketPKgtr9GKG/vo1YbzRO088RllNj9TZkOCVENW1XbjnveAugzwm', 'asd12@gmail.com', ''),
+(10, 'asdasd', 'asd123', 'asdasd@gmail.com', ''),
+(11, 'asder', '$2y$10$l8GJb64dImuyEv12rKfm3OO/37Y6OWKL/InY78w5eWOFkBo2IqY/i', 'asder@gmail.com', ''),
+(12, 'asd1', '$2y$10$fTgbQhXw/lRwppG3PuP.b.3fbY2C3bfkhVXA88TtW2ppE4EsRKgxe', 'a@sd.com', ''),
+(13, 'adda', '$2y$10$oifLpLLo.C9ZvFIlYIr2o.BIfA.aqslRxkBF5ejgw/H072s78o7KC', 'adas@dsasdd.com', '');
 
 --
 -- Indexes for dumped tables
@@ -120,6 +143,12 @@ ALTER TABLE `auto`
 -- Indexes for table `kategoria`
 --
 ALTER TABLE `kategoria`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kosik`
+--
+ALTER TABLE `kosik`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -145,10 +174,16 @@ ALTER TABLE `kategoria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `kosik`
+--
+ALTER TABLE `kosik`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
 -- AUTO_INCREMENT for table `t_user`
 --
 ALTER TABLE `t_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
